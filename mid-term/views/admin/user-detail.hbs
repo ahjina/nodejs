@@ -1,0 +1,69 @@
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
+    <h1 class="h3 mb-0 text-gray-800">{{title}} #{{user._id}}</h1>
+</div>
+<div class="row">
+    <div class="col-9">
+        <form>
+            <div class="row">
+                <div class="col-6 form-group">
+                    <label>First name</label>
+                    <input type="text" value="{{user.firstName}}" disabled class="form-control">
+                </div>
+                <div class="col-6 form-group">
+                    <label>Last name</label>
+                    <input type="text" value="{{user.lastName}}" disabled class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 form-group">
+                    <label>DOB</label>
+                    <input type="date" value="{{user.dob}}" disabled class="form-control">
+                </div>
+                <div class="col-6 form-group">
+                    <label>Gender</label>
+                    <select class="form-control" disabled>
+                        {{#select user.gender}}
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        {{/select}}
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 form-group">
+                    <label>Phone number</label>
+                    <input type="tel" value="{{user.phoneNumber}}" disabled class="form-control">
+                </div>
+                <div class="col-6 form-group">
+                    <label>Email</label>
+                    <input type="email" value="{{user.email}}" disabled class="form-control">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" checked={{user.emailVerified}}>
+                        <label class="form-check-label" for="inlineCheckbox1">Email verified</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 form-group">
+                    <label>Country</label>
+                    <input type="text" value="{{user.country}}" disabled class="form-control">
+                </div>
+                <div class="col-6 form-group">
+                    <label>Zipcode</label>
+                    <input type="text" value="{{user.zipcode}}" disabled class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 form-group">
+                    <label>Role</label>
+                    <input type="text" value="{{user.role}}" disabled class="form-control">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-3">
+        <img src="{{user.avatar}}" class="rounded-circle img-fluid">
+        <h5 class="text-center text-primary mt-2">{{user.firstName}} {{user.lastName}}</h4>
+    </div>
+</div>

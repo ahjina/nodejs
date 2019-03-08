@@ -26,6 +26,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 // register partials
 hbs.registerPartials(path.join(__dirname, '/views/admin/partials'));
 
+// register helper
+hbs.registerHelper('select', function(value, options) {
+  return options
+    .fn(this)
+    .split('\n')
+    .map(function(v) {
+      var t = 'value="' + value + '"';
+      return !RegExp(t).test(v) ? v : v.replace(t, t + ' selected="selected"');
+    })
+    .join('\n');
+});
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/admin', adminRouter);

@@ -1,0 +1,24 @@
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
+    <h1 class="h3 mb-0 text-gray-800">{{title}}</h1>
+</div>
+<div class="row">
+    <div class="col-12">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr class="text-center">
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr {{#each categories}}>
+                    <td class="text-center">{{_id}}</td>
+                    <td>{{name}}</td>
+                    <td>{{description}}</td>
+                </tr {{/each}}>
+            </tbody>
+        </table>
+    </div>
+</div>

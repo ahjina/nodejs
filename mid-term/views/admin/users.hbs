@@ -4,9 +4,9 @@
 </div>
 <div class="row">
     <div class="col-12">
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped table-responsive">
             <thead>
-                <tr>
+                <tr class="text-center">
                     <th>Avatar</th>
                     <th>Id</th>
                     <th>Full name</th>
@@ -21,22 +21,28 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    {{#each users}}
+                {{#each users}}
+                <tr onclick="userDetail('{{_id}}')" class="table-link">
                     <td><img src="{{avatar}}" class="img-fluid"></td>
-                    <td>{{_id}}</td>
+                    <td class="text-center">{{_id}}</td>
                     <td>{{firstName}} {{lastName}}</td>
                     <td>{{dob}}</td>
                     <td>{{gender}}</td>
                     <td>{{phoneNumber}}</td>
                     <td>{{email}}</td>
                     <td>{{country}}</td>
-                    <td>{{zipCode}}</td>
+                    <td>{{zipcode}}</td>
                     <td>{{role}}</td>
                     <td><input type="checkbox" checked="{{emailVerified}}" disabled></td>
-                    {{/each}}
                 </tr>
+                {{/each}}
             </tbody>
         </table>
     </div>
 </div>
+
+<script>
+    function userDetail(id) {
+        location.href = "/admin/users/" + id;
+    }
+</script>

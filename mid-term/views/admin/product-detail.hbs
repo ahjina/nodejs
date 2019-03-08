@@ -1,0 +1,54 @@
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
+    <h1 class="h3 mb-0 text-gray-800">{{title}} #{{user._id}}</h1>
+</div>
+<div class="row">
+    <div class="col-6">
+        <form>
+            <div class="row">
+                <div class="col-6 form-group">
+                    <label>Category</label>
+                    <select class="form-control" disabled>
+                        {{#select product.categoryId}}
+                        <option value="men">Men</option>
+                        <option value="women">Women</option>
+                        {{/select}}
+                    </select>
+                </div>
+                <div class="col-6 form-group">
+                    <label>Name</label>
+                    <input type="text" value="{{product.name}}" disabled class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 form-group">
+                    <label>Short description</label>
+                    <textarea rows="5" class="form-control" disabled>{{product.shortDescription}}</textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 form-group">
+                    <label>Sale price</label>
+                    <input type="number" value="{{product.salePrice}}" disabled class="form-control">
+                </div>
+                <div class="col-6 form-group">
+                    <label>Original price</label>
+                    <input type="number" value="{{product.originalPrice}}" disabled class="form-control">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-6">
+        <div class="row d-flex justify-content-center">
+            <img src="{{product.image}}" class="rounded-circle img-fluid">
+        </div>
+        <div class="row d-flex justify-content-start">
+            {{#each product.images}}
+            <div class="mr-2">
+                <img src="{{this}}" class="img-fluid">
+            </div>
+            {{/each}}
+        </div>
+        <h5 class="text-center text-primary mt-2">{{product.name}}</h4>
+    </div>
+</div>

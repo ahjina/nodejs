@@ -1,0 +1,40 @@
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
+    <h1 class="h3 mb-0 text-gray-800">{{title}}</h1>
+</div>
+<div class="row">
+    <div class="col-12">
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr class="text-center">
+                    <th>Image</th>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Short description</th>
+                    <th>Category</th>
+                    <th>Sale price</th>
+                    <th>Original price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each products}}
+                <tr onclick="productDetail('{{_id}}')" class="table-link">
+                    <td><img src="{{image}}" class="img-fluid"></td>
+                    <td class="text-center">{{_id}}</td>
+                    <td>{{name}}</td>
+                    <td>{{shortDescription}}</td>
+                    <td>{{categoryId}}</td>
+                    <td>{{salePrice}}</td>
+                    <td>{{originalPrice}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function productDetail(id) {
+        location.href = "/admin/products/" + id;
+    }
+</script>
