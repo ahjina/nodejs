@@ -1,17 +1,16 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const mongoose = require('mongoose');
+const debug = require('debug')('app');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const apiRouter = require('./routes/api');
 
-// register admin route
-var adminRouter = require('./routes/admin');
-
-var app = express();
-var hbs = require('hbs');
+const app = express();
+const hbs = require('hbs');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -32,23 +31,21 @@ hbs.registerHelper('select', function(value, options) {
     .fn(this)
     .split('\n')
     .map(function(v) {
-      var t = 'value="' + value + '"';
+      const t = 'value="' + value + '"';
       return !RegExp(t).test(v) ? v : v.replace(t, t + ' selected="selected"');
     })
     .join('\n');
 });
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/admin', adminRouter);
+app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -57,5 +54,20 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// STEP1: Implement this start method to connect to MongoDB & then start Web server
+app.start = (PORT, MONGO_URL) => {
+  mongoose
+    .connect(MONGO_URL)
+    .then(() => {
+      debug('Database connect success');
+      app.listen(PORT, () =>
+        console.log('App started and listening on port', PORT)
+      );
+    })
+    .catch(err => {
+      debug('Database connection error:' + err);
+    });
+};
 
 module.exports = app;

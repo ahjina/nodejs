@@ -1,7 +1,7 @@
-var app = require('./app');
-var hostname = 'localhost';
-var port = 3000;
+// STEP2: Implement this index.js which starts the app with the PORT and MONGO_URL from env variable
+const app = require('./app');
 
-app.listen(port, hostname, () => {
-  console.log(`Server running at ${hostname}:${port}`);
-});
+const PORT = process.env.PORT || 3000;
+const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost:27017/nordic';
+
+app.start(PORT, MONGO_URL);

@@ -4,6 +4,11 @@
 </div>
 <div class="row">
     <div class="col-12">
+        <label>query: {{query}}</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
         <table class="table table-bordered table-striped table-responsive">
             <thead>
                 <tr class="text-center">
@@ -35,6 +40,6 @@
 
 <script>
     function productDetail(id) {
-        location.href = "/admin/products/" + id;
+        location.href = "/api/products/" + id;
     }
 </script>
