@@ -4,11 +4,11 @@
 </div>
 <div class="row">
     <div class="col-6">
-        <form>
+        <form action="/api/products" method="POST">
             <div class="row">
                 <div class="col-6 form-group">
                     <label>Category</label>
-                    <select class="form-control" disabled>
+                    <select class="form-control" name="categoryId">
                         {{#select product.categoryId}}
                         <option value="men">Men</option>
                         <option value="women">Women</option>
@@ -17,25 +17,33 @@
                 </div>
                 <div class="col-6 form-group">
                     <label>Name</label>
-                    <input type="text" value="{{product.name}}" disabled class="form-control">
+                    <input type="text" value="{{product.name}}" class="form-control" name="name">
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 form-group">
                     <label>Short description</label>
-                    <textarea rows="5" class="form-control" disabled>{{product.shortDescription}}</textarea>
+                    <textarea rows="5" class="form-control"
+                        name="shortDescription">{{product.shortDescription}}</textarea>
                 </div>
             </div>
             <div class="row">
                 <div class="col-6 form-group">
                     <label>Sale price</label>
-                    <input type="number" value="{{product.salePrice}}" disabled class="form-control">
+                    <input type="number" value="{{product.salePrice}}" class="form-control" name="salePrice">
                 </div>
                 <div class="col-6 form-group">
                     <label>Original price</label>
-                    <input type="number" value="{{product.originalPrice}}" disabled class="form-control">
+                    <input type="number" value="{{product.originalPrice}}" class="form-control" name="originalPrice">
                 </div>
             </div>
+            {{#unless isDisabled}}
+            <div class="row">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+                </div>
+            </div>
+            {{/unless}}
         </form>
     </div>
     <div class="col-6">
@@ -49,6 +57,12 @@
             </div>
             {{/each}}
         </div>
-        <h5 class="text-center text-primary mt-2">{{product.name}}</h4>
+        <h5 class="text-center text-primary mt-2">{{product.name}}</h5>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('.form-control').prop('disabled', {{ isDisabled }});
+    });
+</script>

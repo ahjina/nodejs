@@ -6,14 +6,12 @@ const collection = 'products';
 module.exports = router => {
   // GET (get all)
   router.get(`/${collection}`, (req, res) => {
-    const { query } = req.query;
     Product.find({})
       .exec()
       .then(result => {
         res.render('admin/products', {
           title: 'Products',
           products: result,
-          query: query,
           layout: '/admin/layout'
         });
       })
@@ -23,22 +21,39 @@ module.exports = router => {
   // POST (create)
   router.post(`/${collection}`, (req, res) => {
     // create one document
+    const product = req.body;
+
+    Product.create(product)
+      .then(() => {
+        return res.redirect('/api/products');
+      })
+      .catch(error => console.log(error));
   });
 
   // GET (get one)
   router.get(`/${collection}/:id`, (req, res) => {
     // get one document from :id
     const id = req.params.id;
-    Product.findOne({ _id: id })
-      .exec()
-      .then(result => {
-        res.render('admin/product-detail', {
-          title: 'Product',
-          product: result,
-          layout: '/admin/layout'
-        });
-      })
-      .catch(error => console.log(error));
+    if (id == 0) {
+      res.render('admin/product-detail', {
+        title: 'Product',
+        product: null,
+        isDisabled: false,
+        layout: '/admin/layout'
+      });
+    } else {
+      Product.findOne({ _id: id })
+        .exec()
+        .then(result => {
+          res.render('admin/product-detail', {
+            title: 'Product',
+            product: result,
+            isDisabled: true,
+            layout: '/admin/layout'
+          });
+        })
+        .catch(error => console.log(error));
+    }
   });
 
   // PATCH (update one)
