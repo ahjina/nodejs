@@ -33,13 +33,20 @@ module.exports = router => {
   });
 
   // STEP7: Implement GET /api/users/:id to get one user with provided Id from database
-  router.get(`/${collection}/:id`, (req, res) => {
+  router.get(`/${collection}/:id/:type`, (req, res) => {
     const id = req.params.id;
+    const type = req.params.type;
+    let isDisabled;
+
+    if (type === 'view') isDisabled = true;
+    else isDisabled = false;
+
     User.findOne({ _id: id })
       .exec()
       .then(user => {
         res.render('admin/user-detail', {
           title: 'User',
+          isDisabled: isDisabled,
           user: user,
           layout: '/admin/layout'
         });

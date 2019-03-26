@@ -8,7 +8,6 @@
             <thead>
                 <tr class="text-center">
                     <th>Avatar</th>
-                    <th>Id</th>
                     <th>Full name</th>
                     <th>DOB</th>
                     <th>Gender</th>
@@ -18,13 +17,13 @@
                     <th>Zip code</th>
                     <th>Role</th>
                     <th>Email verified</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 {{#each users}}
-                <tr onclick="userDetail('{{_id}}')" class="table-link">
+                <tr class="table-link">
                     <td><img src="{{avatar}}" class="img-fluid"></td>
-                    <td class="text-center">{{_id}}</td>
                     <td>{{firstName}} {{lastName}}</td>
                     <td>{{dob}}</td>
                     <td>{{gender}}</td>
@@ -34,6 +33,12 @@
                     <td>{{zipcode}}</td>
                     <td>{{role}}</td>
                     <td><input type="checkbox" checked="{{emailVerified}}" disabled></td>
+                    <td>
+                        <button class="btn btn-sm btn-light mb-1" onclick="userDetail('{{_id}}')"><i
+                                class="far fa-eye"></i></button>
+                        <button class="btn btn-sm btn-info" onclick="editUser('{{_id}}')"><i
+                                class="far fa-edit"></i></button>
+                    </td>
                 </tr>
                 {{/each}}
             </tbody>
@@ -43,6 +48,10 @@
 
 <script>
     function userDetail(id) {
-        location.href = "/api/users/" + id;
+        location.href = "/api/users/" + id + "/view";
+    }
+
+    function editUser(id) {
+        location.href = "/api/users/" + id + "/edit";
     }
 </script>

@@ -8,21 +8,21 @@
             <div class="row">
                 <div class="col-6 form-group">
                     <label>First name</label>
-                    <input type="text" value="{{user.firstName}}" disabled class="form-control">
+                    <input type="text" value="{{user.firstName}}" class="form-control">
                 </div>
                 <div class="col-6 form-group">
                     <label>Last name</label>
-                    <input type="text" value="{{user.lastName}}" disabled class="form-control">
+                    <input type="text" value="{{user.lastName}}" class="form-control">
                 </div>
             </div>
             <div class="row">
                 <div class="col-6 form-group">
                     <label>DOB</label>
-                    <input type="date" value="{{user.dob}}" disabled class="form-control">
+                    <input type="date" value="{{user.dob}}" class="form-control">
                 </div>
                 <div class="col-6 form-group">
                     <label>Gender</label>
-                    <select class="form-control" disabled>
+                    <select class="form-control">
                         {{#select user.gender}}
                         <option value="male">Male</option>
                         <option value="female">Female</option>
@@ -33,33 +33,40 @@
             <div class="row">
                 <div class="col-6 form-group">
                     <label>Phone number</label>
-                    <input type="tel" value="{{user.phoneNumber}}" disabled class="form-control">
+                    <input type="tel" value="{{user.phoneNumber}}" class="form-control">
                 </div>
                 <div class="col-6 form-group">
                     <label>Email</label>
-                    <input type="email" value="{{user.email}}" disabled class="form-control">
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" checked={{user.emailVerified}}>
-                        <label class="form-check-label" for="inlineCheckbox1">Email verified</label>
+                    <input type="email" value="{{user.email}}" class="form-control">
+                    <div class="form-check form-check-inline mt-1">
+                        <input class="form-check-input" type="checkbox" name="chkEmail" checked={{user.emailVerified}}>
+                        <label class="form-check-label" for="chkEmail">Email verified</label>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-6 form-group">
                     <label>Country</label>
-                    <input type="text" value="{{user.country}}" disabled class="form-control">
+                    <input type="text" value="{{user.country}}" class="form-control">
                 </div>
                 <div class="col-6 form-group">
                     <label>Zipcode</label>
-                    <input type="text" value="{{user.zipcode}}" disabled class="form-control">
+                    <input type="text" value="{{user.zipcode}}" class="form-control">
                 </div>
             </div>
             <div class="row">
                 <div class="col-6 form-group">
                     <label>Role</label>
-                    <input type="text" value="{{user.role}}" disabled class="form-control">
+                    <input type="text" value="{{user.role}}" class="form-control">
                 </div>
             </div>
+            {{#unless isDisabled}}
+            <div class="row">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+            {{/unless}}
         </form>
     </div>
     <div class="col-3">
@@ -67,3 +74,17 @@
         <h5 class="text-center text-primary mt-2">{{user.firstName}} {{user.lastName}}</h4>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        var isDisabled = '{{isDisabled}}';
+
+        console.log(isDisabled);
+
+        if (isDisabled === 'true') {
+            $('.form-control').prop('disabled', true);
+        } else {
+            $('.form-control').prop('disabled', false);
+        }
+    });
+</script>
