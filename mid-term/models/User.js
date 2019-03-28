@@ -97,7 +97,8 @@ const userSchema = new Schema({
   dateCreated: {
     type: Date,
     default: Date.now
-  }
+  },
+  strDOB: String
 });
 //*/
 

@@ -2,6 +2,11 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
     <h1 class="h3 mb-0 text-gray-800">{{title}}</h1>
 </div>
+<div class="row mb-2">
+    <div class="col-12">
+        <a class="btn btn-primary" href="/api/users/0/create"><i class="fas fa-plus"></i> Create</a>
+    </div>
+</div>
 <div class="row">
     <div class="col-12">
         <table class="table table-bordered table-striped table-responsive">
@@ -25,7 +30,7 @@
                 <tr class="table-link">
                     <td><img src="{{avatar}}" class="img-fluid"></td>
                     <td>{{firstName}} {{lastName}}</td>
-                    <td>{{dob}}</td>
+                    <td>{{strDOB}}</td>
                     <td>{{gender}}</td>
                     <td>{{phoneNumber}}</td>
                     <td>{{email}}</td>

@@ -3,6 +3,7 @@
 // First use the blank template from api.model.js with the model is actually User` and collection named `users`
 const User = require('../models/User');
 const collection = 'users';
+const dateFormat = require('date-fns');
 
 module.exports = router => {
   // STEP6: Implement GET /api/users to get all users from database
@@ -10,6 +11,10 @@ module.exports = router => {
     User.find({})
       .exec()
       .then(users => {
+        users.forEach(item => {
+          item.strDOB = dateFormat.format(item.dob.toString(), 'YYYY-MM-DD');
+        });
+
         res.render('admin/users', {
           title: 'Users',
           users: users,
@@ -25,7 +30,7 @@ module.exports = router => {
   router.post(`/${collection}`, (req, res) => {
     User.create(req.body)
       .then(newUser => {
-        res.sendRest(newUser);
+        res.redirect(`/api/${collection}`);
       })
       .catch(err => {
         res.sendRest(err);
@@ -35,25 +40,43 @@ module.exports = router => {
   // STEP7: Implement GET /api/users/:id to get one user with provided Id from database
   router.get(`/${collection}/:id/:type`, (req, res) => {
     const id = req.params.id;
-    const type = req.params.type;
-    let isDisabled;
+    let isDisabled, actionPath;
 
-    if (type === 'view') isDisabled = true;
-    else isDisabled = false;
-
-    User.findOne({ _id: id })
-      .exec()
-      .then(user => {
-        res.render('admin/user-detail', {
-          title: 'User',
-          isDisabled: isDisabled,
-          user: user,
-          layout: '/admin/layout'
-        });
-      })
-      .catch(err => {
-        res.sendRest(err);
+    if (id === '0') {
+      isDisabled = false;
+      actionPath = `/api/${collection}`;
+      res.render('admin/user-detail', {
+        title: 'User',
+        isDisabled: isDisabled,
+        user: null,
+        actionPath: actionPath,
+        layout: '/admin/layout'
       });
+    } else {
+      const type = req.params.type;
+
+      if (type === 'view') isDisabled = true;
+      else {
+        isDisabled = false;
+        actionPath = `/api/${collection}/${id}`;
+      }
+
+      User.findOne({ _id: id })
+        .exec()
+        .then(user => {
+          user.strDOB = dateFormat.format(user.dob.toString(), 'YYYY-MM-DD');
+          res.render('admin/user-detail', {
+            title: 'User',
+            isDisabled: isDisabled,
+            user: user,
+            actionPath: actionPath,
+            layout: '/admin/layout'
+          });
+        })
+        .catch(err => {
+          res.sendRest(err);
+        });
+    }
   });
 
   // STEP9: Implement PATCH /api/users/:id to update one user with provided Id and body payload

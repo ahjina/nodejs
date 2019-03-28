@@ -12,6 +12,8 @@ const apiRouter = require('./routes/api');
 const app = express();
 const hbs = require('hbs');
 
+const methodOverride = require('method-override');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -44,6 +46,8 @@ app.use('/api', apiRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
+app.use(methodOverride('_method'));
 
 app.use(function(err, req, res) {
   // set locals, only providing error in development
