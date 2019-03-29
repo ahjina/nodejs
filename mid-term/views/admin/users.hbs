@@ -4,7 +4,7 @@
 </div>
 <div class="row mb-2">
     <div class="col-12">
-        <a class="btn btn-primary" href="/api/users/0/create"><i class="fas fa-plus"></i> Create</a>
+        <a class="btn btn-primary" href="/admin/users/0/create">Create</a>
     </div>
 </div>
 <div class="row">
@@ -41,8 +41,10 @@
                     <td>
                         <button class="btn btn-sm btn-light mb-1" onclick="userDetail('{{_id}}')"><i
                                 class="far fa-eye"></i></button>
-                        <button class="btn btn-sm btn-info" onclick="editUser('{{_id}}')"><i
+                        <button class="btn btn-sm btn-info mb-1" onclick="editUser('{{_id}}')"><i
                                 class="far fa-edit"></i></button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteUser('{{_id}}')"><i
+                                class="far fa-trash-alt"></i></button>
                     </td>
                 </tr>
                 {{/each}}
@@ -53,10 +55,25 @@
 
 <script>
     function userDetail(id) {
-        location.href = "/api/users/" + id + "/view";
+        location.href = "/admin/users/" + id + "/view";
     }
 
     function editUser(id) {
-        location.href = "/api/users/" + id + "/edit";
+        location.href = "/admin/users/" + id + "/edit";
+    }
+
+    function deleteUser(id) {
+        var result = confirm('Are you sure you want to delete?');
+
+        if (result) {
+            $.ajax({
+                type: 'DELETE',
+                url: '/admin/users/' + id,
+                processData: false,
+                contentType: 'application/merge-patch+json',
+
+                /* success and error handling omitted for brevity */
+            });
+        }
     }
 </script>

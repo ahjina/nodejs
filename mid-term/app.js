@@ -12,8 +12,6 @@ const apiRouter = require('./routes/api');
 const app = express();
 const hbs = require('hbs');
 
-const methodOverride = require('method-override');
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -40,14 +38,12 @@ hbs.registerHelper('select', function(value, options) {
 });
 
 app.use('/', indexRouter);
-app.use('/api', apiRouter);
+app.use('/admin', apiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
-
-app.use(methodOverride('_method'));
 
 app.use(function(err, req, res) {
   // set locals, only providing error in development

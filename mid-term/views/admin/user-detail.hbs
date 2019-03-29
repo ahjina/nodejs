@@ -4,7 +4,8 @@
 </div>
 <div class="row">
     <div class="col-9">
-        <form action="{{actionPath}}" method="POST">
+        <form action="{{actionPath}}" method="POST" onsubmit="processForm()">
+            <input type="hidden" name="_method" value="{{_method}}">
             <div class="row">
                 <div class="col-6 form-group">
                     <label>First name</label>
@@ -93,13 +94,13 @@
     $(document).ready(function () {
         var isDisabled = '{{isDisabled}}';
 
-        console.log(isDisabled);
-
         if (isDisabled === 'true') {
             $('.form-control').prop('disabled', true);
         } else {
             $('.form-control').prop('disabled', false);
         }
+
+        $('#emailVerified').val(true);
 
         $('input[name="chkEmailVerified"]').change(function () {
             $('#emailVerified').val(this.checked);
@@ -109,5 +110,21 @@
     function getDOB(strDOB) {
         if (strDOB != null || strDOB != '')
             $('#hfDOB').val(new Date(strDOB));
+    }
+
+    function processForm() {
+        if ($('input[name="_method"').val() === "PATCH") {
+            var formData = new FormData(document.querySelector('form'))
+            var body = formData.body;
+            $.ajax({
+                type: 'PATCH',
+                url: '/admin/users/' + id,
+                body: JSON.stringify(body),
+                processData: false,
+                contentType: 'application/merge-patch+json',
+
+                /* success and error handling omitted for brevity */
+            });
+        } else return true;
     }
 </script>

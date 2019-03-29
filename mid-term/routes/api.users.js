@@ -30,7 +30,7 @@ module.exports = router => {
   router.post(`/${collection}`, (req, res) => {
     User.create(req.body)
       .then(newUser => {
-        res.redirect(`/api/${collection}`);
+        res.redirect(`/admin/${collection}`);
       })
       .catch(err => {
         res.sendRest(err);
@@ -44,7 +44,7 @@ module.exports = router => {
 
     if (id === '0') {
       isDisabled = false;
-      actionPath = `/api/${collection}`;
+      actionPath = `/admin/${collection}`;
       res.render('admin/user-detail', {
         title: 'User',
         isDisabled: isDisabled,
@@ -54,11 +54,15 @@ module.exports = router => {
       });
     } else {
       const type = req.params.type;
+      let _method;
 
-      if (type === 'view') isDisabled = true;
-      else {
+      if (type === 'view') {
+        isDisabled = true;
+        _method = 'POST';
+      } else {
         isDisabled = false;
-        actionPath = `/api/${collection}/${id}`;
+        actionPath = `/admin/${collection}/${id}`;
+        _method = 'PATCH';
       }
 
       User.findOne({ _id: id })
@@ -70,6 +74,7 @@ module.exports = router => {
             isDisabled: isDisabled,
             user: user,
             actionPath: actionPath,
+            _method: _method,
             layout: '/admin/layout'
           });
         })
@@ -83,11 +88,12 @@ module.exports = router => {
   router.patch(`/${collection}/:id`, (req, res) => {
     const id = req.params.id;
     const updatedBody = req.body;
-    User.findByIdAndUpdate(id, updatedBody, { runValidators: true })
+    // User.findByIdAndUpdate(id, updatedBody, { runValidators: true })
+    User.findByIdAndUpdate(id, updatedBody)
       .exec()
       .then(user => {
         // Object.assign({}, user.toObject(), updatedBody);
-        res.sendRest({ ...user.toObject(), ...updatedBody });
+        res.redirect(`/${collection}`);
       })
       .catch(err => {
         res.sendRest(err);
@@ -100,7 +106,7 @@ module.exports = router => {
     User.findByIdAndRemove(id)
       .exec()
       .then(user => {
-        res.sendRest(user);
+        res.redirect(`/${collection}`);
       })
       .catch(err => {
         res.sendRest(err);
