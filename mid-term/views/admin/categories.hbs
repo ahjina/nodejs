@@ -10,15 +10,56 @@
                     <th>Id</th>
                     <th>Name</th>
                     <th>Description</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 <tr {{#each categories}}>
                     <td class="text-center">{{_id}}</td>
-                    <td>{{name}}</td>
-                    <td>{{description}}</td>
+                    <td>
+                        <input id="name_{{_id}}" type="text" name="name" class="form-control" value="{{name}}" disabled>
+                    </td>
+                    <td>
+                        <input id="description_{{_id}}" type="text" name="description" class="form-control"
+                            value="{{description}}" disabled>
+                    </td>
+                    <td>
+                        <button id="btnEdit_{{_id}}" class="btn btn-sm btn-info mb-1"
+                            onclick="editCategory('{{_id}}')"><i class="far fa-edit"></i></button>
+                        <button id="btnSave_{{_id}}" class="btn btn-sm btn-success mb-1 d-none"
+                            onclick="saveCategory('{{_id}}')"><i class="far fa-save"></i></button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteCategory('{{_id}}')"><i
+                                class="far fa-trash-alt"></i></button>
+                    </td>
                 </tr {{/each}}>
             </tbody>
         </table>
     </div>
 </div>
+
+<script>
+    function editCategory(id) {
+        $('.form-control').attr('disabled', true);
+        $('#name_' + id).prop('disabled', false);
+        $('#description_' + id).prop('disabled', false);
+        $('#btnSave_' + id).removeClass('d-none');
+        $('#btnEdit_' + id).addClass('d-none');
+    }
+
+    function saveCategory(id) {
+        var name = $('#name_' + id).val();
+        var description = $('#description_' + id).val();
+
+        var body = { name: name, description: description };
+
+        $.ajax({
+            type: 'PATCH',
+            url: '/admin/users/' + id,
+            body: JSON.stringify(body),
+            processData: false,
+            contentType: 'application/merge-patch+json',
+
+            /* success and error handling omitted for brevity */
+        });
+    }
+</script>

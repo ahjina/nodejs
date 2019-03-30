@@ -88,12 +88,13 @@ module.exports = router => {
   router.patch(`/${collection}/:id`, (req, res) => {
     const id = req.params.id;
     const updatedBody = req.body;
+
     // User.findByIdAndUpdate(id, updatedBody, { runValidators: true })
     User.findByIdAndUpdate(id, updatedBody)
       .exec()
       .then(user => {
         // Object.assign({}, user.toObject(), updatedBody);
-        res.redirect(`/${collection}`);
+        res.redirect(`/admin/${collection}`);
       })
       .catch(err => {
         res.sendRest(err);
@@ -106,7 +107,7 @@ module.exports = router => {
     User.findByIdAndRemove(id)
       .exec()
       .then(user => {
-        res.redirect(`/${collection}`);
+        res.redirect(`/admin/${collection}`);
       })
       .catch(err => {
         res.sendRest(err);
